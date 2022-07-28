@@ -7,11 +7,9 @@ export default function Reviews() {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    fetchReviews(moviesId)
-      .then(res => res.json())
-      .then(info => {
-        return setReviews(info.results);
-      });
+    fetchReviews(moviesId).then(info => {
+      return setReviews(info.results);
+    });
   }, [moviesId]);
 
   return reviews.length < 1 ? (

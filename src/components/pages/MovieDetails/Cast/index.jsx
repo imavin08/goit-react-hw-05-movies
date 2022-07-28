@@ -10,7 +10,6 @@ export default function Cast() {
 
   useEffect(() => {
     fetchMovieActors(moviesId)
-      .then(res => res.json())
       .then(({ cast }) => {
         return setActors(cast);
       })

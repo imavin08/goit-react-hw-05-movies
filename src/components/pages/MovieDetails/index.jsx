@@ -1,6 +1,6 @@
 import { fetchMovieDetails, BASE_URL } from '../../../services/index';
-import { useParams, Link, Outlet } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
+import { useEffect, useState, Suspense } from 'react';
 import css from './MovieDetails.module.css';
 
 export default function MovieDetails() {
@@ -8,11 +8,9 @@ export default function MovieDetails() {
   const { moviesId } = useParams();
 
   useEffect(() => {
-    fetchMovieDetails(moviesId)
-      .then(res => res.json())
-      .then(info => {
-        setinfo(info);
-      });
+    fetchMovieDetails(moviesId).then(info => {
+      setinfo(info);
+    });
   }, [moviesId]);
 
   const getGenres = () => {
@@ -23,11 +21,15 @@ export default function MovieDetails() {
   };
 
   const { poster_path, title, original_title, vote_average, overview } = info;
+  const location = useLocation();
+
+  const cameBack = location.state?.from ?? '/';
 
   return (
     <div>
       <div className={css.container}>
-        <Link to="/">Go back</Link>
+        <Link to={cameBack}>Go back</Link>
+
         <div className={css.card}>
           <img
             className={css.img}
@@ -46,13 +48,19 @@ export default function MovieDetails() {
       </div>
       <ul>
         <li>
-          <Link to="cast">Cast</Link>
+          <Link to="cast" state={{ from: cameBack }}>
+            Cast
+          </Link>
         </li>
         <li>
-          <Link to="reviews">Reviews</Link>
+          <Link to="reviews" state={{ from: cameBack }}>
+            Reviews
+          </Link>
         </li>
       </ul>
-      <Outlet />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Outlet />
+      </Suspense>
     </div>
   );
 }
