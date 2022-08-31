@@ -1,7 +1,8 @@
-import { fetchMovieDetails } from '../../../services/index';
+import { fetchMovieDetails, BASE_URL } from '../../../services/index';
 import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
 import { useEffect, useState, Suspense } from 'react';
 import css from './MovieDetails.module.css';
+import image from '../../../images/defaultImage.jpg';
 
 export default function MovieDetails() {
   const [info, setinfo] = useState('');
@@ -20,7 +21,7 @@ export default function MovieDetails() {
     return info.genres.map(g => g.name).join(' ');
   };
 
-  const { original_title, vote_average, overview } = info;
+  const { poster_path, title, original_title, vote_average, overview } = info;
   const location = useLocation();
   const cameBack = location.state?.from ?? '/';
   return (
@@ -29,11 +30,12 @@ export default function MovieDetails() {
         <Link to={cameBack}>Go back</Link>
 
         <div className={css.card}>
-          {/* <img
+          <img
             className={css.img}
-            src={poster_path ? BASE_URL + poster_path : <p>{title}</p>}
+            src={poster_path ? BASE_URL + poster_path : image}
             alt={title}
-          /> */}
+          />
+
           <div>
             <h1>{original_title}</h1>
             <p>User Score: {vote_average}</p>
