@@ -1,4 +1,4 @@
-import { fetchMovieDetails, BASE_URL } from '../../../services/index';
+import { fetchMovieDetails } from '../../../services/index';
 import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
 import { useEffect, useState, Suspense } from 'react';
 import css from './MovieDetails.module.css';
@@ -20,7 +20,7 @@ export default function MovieDetails() {
     return info.genres.map(g => g.name).join(' ');
   };
 
-  const { poster_path, title, original_title, vote_average, overview } = info;
+  const { original_title, vote_average, overview } = info;
   const location = useLocation();
   const cameBack = location.state?.from ?? '/';
   return (
