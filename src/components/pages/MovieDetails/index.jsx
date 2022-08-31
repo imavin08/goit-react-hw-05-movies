@@ -4,7 +4,7 @@ import { useEffect, useState, Suspense } from 'react';
 import css from './MovieDetails.module.css';
 
 export default function MovieDetails() {
-  const [info, setinfo] = useState([]);
+  const [info, setinfo] = useState('');
   const { moviesId } = useParams();
 
   useEffect(() => {
@@ -14,7 +14,7 @@ export default function MovieDetails() {
   }, [moviesId]);
 
   const getGenres = () => {
-    if (info.length < 1) {
+    if (info === '') {
       return;
     }
     return info.genres.map(g => g.name).join(' ');
@@ -22,7 +22,6 @@ export default function MovieDetails() {
 
   const { poster_path, title, original_title, vote_average, overview } = info;
   const location = useLocation();
-
   const cameBack = location.state?.from ?? '/';
 
   return (
