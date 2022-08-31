@@ -23,18 +23,17 @@ export default function MovieDetails() {
   const { poster_path, title, original_title, vote_average, overview } = info;
   const location = useLocation();
   const cameBack = location.state?.from ?? '/';
-
   return (
     <div>
       <div className={css.container}>
         <Link to={cameBack}>Go back</Link>
 
         <div className={css.card}>
-          <img
+          {/* <img
             className={css.img}
             src={poster_path ? BASE_URL + poster_path : <p>{title}</p>}
             alt={title}
-          />
+          /> */}
           <div>
             <h1>{original_title}</h1>
             <p>User Score: {vote_average}</p>
